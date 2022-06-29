@@ -1,0 +1,260 @@
+	
+</html>
+<html>
+     <head>
+           <title>WWW.SABBIR WEB DEVLOPER.COM</title>
+		   
+		   <style>
+		 .sabbir{
+		   color : white;
+		   background-color : orangered;
+		   font-size :40px;
+		   margin-bottom :10px;
+		   font-family : 10PX;
+		   height:100px;
+		   padding-left: 150px;
+		   padding-top:30PX;
+
+         }
+		 
+		 .hpi{
+			 font-style: italic;
+			 color: deeppink;
+		 }
+		 .imageone{
+		     width : 500px;
+		 }
+		 
+		 #shimu{
+		   height: 400px;
+		   width:400px;
+		   border-radius:50%;
+		 }
+		 .ol{
+			 color: rgb(0, 17, 255);
+		 }
+		 .ul{
+			 color: red;
+		 }
+		 .paragraph{
+			 color: deeppink;
+			 font-size: 25px;
+			 font-family: Verdana, Geneva, Tahoma, sans-serif;
+		 }
+		 #birthday{
+			 color: mediumspringgreen;
+			 font-style:italic;
+			 font-size: 50px;
+
+		 }
+         #hridoy{
+			 color: deeppink;
+		 }
+		 .black{
+			 color: deeppink;
+		 }
+	    .boss{
+			background-color: orange;
+		}
+		h3.hridoy{
+			font-size: 700px; 
+		}
+
+		 div {
+			 background-color: yellow;
+		 }
+		 div.first {
+			 opacity: 0.2;
+			 color: black;
+		 }
+		 div.second {
+			opacity: 0.5;
+			color: deeppink;
+		 }
+		 div.third {
+			opacity: 0.8;
+			color: chartreuse;
+		 }
+		 .blog{
+			 background-color: #1100ff;
+		 }
+		 #ppp{
+			height: 200px;
+		   width:200px;
+		   border-radius:50%;
+		   margin-left: 200px;
+		 }
+		 #sss{
+			height: 200px;
+		   width:200px;
+		   border-radius:50%;
+		   margin-left: 80px;
+		 }
+		 .like{
+			 color: hsl(135, 84%, 52%);
+		 }
+		 .is{
+			 font-size: 50px;
+			 font-style: inherit;
+		 }
+		 .dream{
+            color: whitesmoke;
+		 }
+		 .this{
+            font-size: 50px;
+			 font-style: oblique;
+		 }
+		 #sa{
+			height: 200px;
+		   width:200px;
+		   border-radius:50%;
+		   margin-left: 20px; 
+		 }
+		 .I{
+			font-size: 50px;
+			 font-style: inherit; 
+		 }
+		 .m{
+			 color: lightblue;
+		 }
+         .mama{
+			 color: darkred;
+			 background-color: lightseagreen;
+			 padding: 25px;
+			 margin-left: 320px;
+			 margin-top: 50px;
+			 border-radius: 50px;
+		 }
+		 .blog{
+			 border: 5px dotted black;
+			 border-radius: 40px;
+			 margin: 40px 60px 80px 100px;
+			 padding: 40px;
+		 }
+		 .H{
+			 color: hsl(357, 98%, 48%);
+			 font-style: italic;
+		 }
+		 .clock{
+			color: green;
+			font-style: inherit;
+		 }
+		 .time{
+			width: 100px;
+			height: 40px;
+			background-color: fuchsia;
+		 }
+		 
+		</style>
+	 </head>
+	 <body>
+	<center>
+		<h2 class="H">THIS IS ANALOG CLOCK.</h2>
+		<canvas id="canvas" width="200" height="200"
+		style="background-color: #88ff00">
+		</canvas>
+	 <script>
+		var canvas = document.getElementById("canvas");
+		var ctx = canvas.getContext("2d");
+		var radius = canvas.height / 2;
+		ctx.translate(radius, radius);
+		radius = radius * 0.90
+		setInterval(drawClock, 1000);
+		
+		function drawClock() {
+		  drawFace(ctx, radius);
+		  drawNumbers(ctx, radius);
+		  drawTime(ctx, radius);
+		}
+		
+		function drawFace(ctx, radius) {
+		  var grad;
+		  ctx.beginPath();
+		  ctx.arc(0, 0, radius, 0, 2*Math.PI);
+		  ctx.fillStyle = 'white';
+		  ctx.fill();
+		  grad = ctx.createRadialGradient(0,0,radius*0.95, 0,0,radius*1.05);
+		  grad.addColorStop(0, '#333');
+		  grad.addColorStop(0.5, 'white');
+		  grad.addColorStop(1, '#333');
+		  ctx.strokeStyle = grad;
+		  ctx.lineWidth = radius*0.1;
+		  ctx.stroke();
+		  ctx.beginPath();
+		  ctx.arc(0, 0, radius*0.1, 0, 2*Math.PI);
+		  ctx.fillStyle = '#333';
+		  ctx.fill();
+		}
+		
+		function drawNumbers(ctx, radius) {
+		  var ang;
+		  var num;
+		  ctx.font = radius*0.15 + "px arial";
+		  ctx.textBaseline="middle";
+		  ctx.textAlign="center";
+		  for(num = 1; num < 13; num++){
+			ang = num * Math.PI / 6;
+			ctx.rotate(ang);
+			ctx.translate(0, -radius*0.85);
+			ctx.rotate(-ang);
+			ctx.fillText(num.toString(), 0, 0);
+			ctx.rotate(ang);
+			ctx.translate(0, radius*0.85);
+			ctx.rotate(-ang);
+		  }
+		}
+		
+		function drawTime(ctx, radius){
+			var now = new Date();
+			var hour = now.getHours();
+			var minute = now.getMinutes();
+			var second = now.getSeconds();
+			//hour
+			hour=hour%12;
+			hour=(hour*Math.PI/6)+
+			(minute*Math.PI/(6*60))+
+			(second*Math.PI/(360*60));
+			drawHand(ctx, hour, radius*0.5, radius*0.07);
+			//minute
+			minute=(minute*Math.PI/30)+(second*Math.PI/(30*60));
+			drawHand(ctx, minute, radius*0.8, radius*0.07);
+			// second
+			second=(second*Math.PI/30);
+			drawHand(ctx, second, radius*0.9, radius*0.02);
+		}
+		
+		function drawHand(ctx, pos, length, width) {
+			ctx.beginPath();
+			ctx.lineWidth = width;
+			ctx.lineCap = "round";
+			ctx.moveTo(0,0);
+			ctx.rotate(pos);
+			ctx.lineTo(0, -length);
+			ctx.stroke();
+			ctx.rotate(-pos);
+		}
+	</script>
+
+	<h2 class="clock">THIS IS DESITAL CLOCK.</h2>
+
+	 <p id="demo" class="time"></p>
+
+	 <script>
+		setInterval(myTimer, 1000);
+		
+		function myTimer() {
+		  const d = new Date();
+		  document.getElementById("demo").innerHTML = d.toLocaleTimeString();
+		}
+	</script>
+
+	 <script>
+	 setInterval(myTimer, 1000);
+	 
+	 function myTimer() {
+	   const d = new Date();
+	   document.getElementById("demo").innerHTML = d.toLocaleTimeString();
+	 }
+	 </script>
+  </body>
+</html>
